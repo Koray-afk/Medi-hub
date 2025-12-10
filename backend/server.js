@@ -26,7 +26,14 @@ connectMongoDb(`${process.env.MONGODB_URI}/${DB_NAME}`)
 
 // Middleware configure 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: [
+      'http://localhost:5175',
+      'http://localhost:5173' 
+    ],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true
+  }))
 
 // API endpoints 
 app.get('/',(req,res)=>{
