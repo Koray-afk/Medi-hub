@@ -28,8 +28,8 @@ connectMongoDb(`${process.env.MONGODB_URI}/${DB_NAME}`)
 app.use(express.json())
 app.use(cors({
     origin: [
-      'http://localhost:5175',
-      'http://localhost:5173' 
+      process.env.frontend_Url,
+      process.env.admin_Url 
     ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true
