@@ -12,9 +12,9 @@ import Dashboard from './pages/Admin/Dashboard';
 import AddDoctor from './pages/Admin/AddDoctor';
 import DoctorList from './pages/Admin/DoctorList';
 import { DoctorContext } from './context/DoctorContext';
-import DoctorDashboard from './pages/Doctor/doctorDashboard';
-import DoctorAppointment from './pages/Doctor/doctorAppointment';
-import DoctorProfile from './pages/Doctor/doctorProfile';
+import DoctorDashboard from './pages/Doctor/DoctorDashboard';
+import DoctorAppointment from './pages/Doctor/DoctorAppointment';
+import DoctorProfile from './pages/Doctor/DoctorProfile';
 
 
 function App() {
