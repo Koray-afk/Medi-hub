@@ -16,16 +16,16 @@ const registerUser = async(req,res)=>{
  
  
      if(!name || !email || !password){
-         return res.status(400).json({success:false,nessage:'Some fields are missing'})
+         return res.status(400).json({success:false,message:'Some fields are missing'})
      }
- 
+
      // Now we have to verify email and password 
      if(!validator.isEmail(email)){
-         return res.status(400).json({success:false,nessage:'Please enter a valid email '})
+         return res.status(400).json({success:false,message:'Please enter a valid email '})
      }
- 
+
      if(password.length<8){
-         return res.status(400).json({success:false,nessage:'Please enter a strong password'})
+         return res.status(400).json({success:false,message:'Please enter a strong password'})
      }
  
      // Now we have to hash our password to protect it 
@@ -91,9 +91,9 @@ const loginUser = async(req,res)=>{
 
     }
     catch(error){
-        console.log(error)
-        return res.status(500).json({message:false,message:error.message})
-    }
+         console.log(error)
+         return res.status(500).json({success:false,message:error.message})
+     }
 }
 
 // Api to get user profile data 
@@ -209,9 +209,9 @@ const listAppointment = async(req,res)=>{
         return res.status(201).json({success:true,appointment})
     }
     catch(error){
-        console.log(error)
-        return res.status(500).json({success:true,message:error.message})
-    }
+         console.log(error)
+         return res.status(500).json({success:false,message:error.message})
+     }
 }
 
 // Api to cancel appointment 
@@ -253,9 +253,13 @@ const paymentRazarpay = async(req,res)=>{
     //there are three steps to to make a instance of razorpay 
     // Create Options 
     // Create order 
+    console.log("Hello From Abhiman - Payment API")
     try{
+        console.log(req.body)
         const {appointmentId} = req.body
         const appointmentData = await appointments.findById(appointmentId)
+        console.log("Abhiman Singh")
+        console.log("The appointment data is ",appointmentId)
         
         if(!appointmentData || appointmentData.cancelled){
             return res.status(400).json({success:false,message:"Unauthorize action or appointment not found"})
@@ -267,14 +271,18 @@ const paymentRazarpay = async(req,res)=>{
             receipt:appointmentId
         }
 
+
+
         const order = await razorpay.orders.create(options)
+
+        console.log("The order from razorpay is ",order)
 
         return res.status(201).json({success:true,order})
     }
     catch(error){
-        console.log(error)
-        return res.status(500).json({success:true, message:'Something went wring in payment gateway'})
-    }
+         console.log(error)
+         return res.status(500).json({success:false, message:'Something went wrong in payment gateway'})
+     }
 }
 
 // Api to verify payment of razorpay 
@@ -285,18 +293,18 @@ const verifyRazorpay = async(req,res)=>{
 
         console.log(orderInfo)
 
-        if(orderInfo.status==='paid'){
-            await appointments.findByIdAndUpdate(orderInfo.receipt,{payment:true})
-            return res.status(201).json({success:true,message:"Payment SuccessFul"})
-        }
-        else{
-            return res.status(401).json({success:fal,message:"Payment SuccessFul"})
-        }
-        }
+         if(orderInfo.status==='paid'){
+             await appointments.findByIdAndUpdate(orderInfo.receipt,{payment:true})
+             return res.status(201).json({success:true,message:"Payment SuccessFul"})
+         }
+         else{
+             return res.status(401).json({success:false,message:"Payment not successful"})
+         }
+         }
     catch(error){
-        console.log(error)
-        return res.status(501).json({success:fal,message:"Something went wrong in the payment process"})
-    }
+         console.log(error)
+         return res.status(501).json({success:false,message:"Something went wrong in the payment process"})
+     }
 }
 
 module.exports={

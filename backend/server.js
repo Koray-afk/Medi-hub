@@ -26,14 +26,21 @@ connectMongoDb(`${process.env.MONGODB_URI}/${DB_NAME}`)
 
 // Middleware configure 
 app.use(express.json())
+
+// CORS configuration
+// Allow configured env origins plus localhost defaults for development
+const allowedOrigins = [
+  process.env.frontend_Url,
+  process.env.admin_Url,
+  'http://localhost:5173', // main frontend (Vite default)
+  'http://localhost:5174'  // admin frontend (if used)
+].filter(Boolean)
+
 app.use(cors({
-    origin: [
-      process.env.frontend_Url,
-      process.env.admin_Url 
-    ],
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    credentials: true
-  }))
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  credentials: true
+}))
 
 // API endpoints 
 app.get('/',(req,res)=>{

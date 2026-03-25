@@ -27,7 +27,7 @@ function Login() {
           navigate('/')
         }
         else{
-          token.error(data.message)
+          toast.error(data.message)
         }
       }
       else{
@@ -39,7 +39,7 @@ function Login() {
           navigate('/')
         }
         else{
-          token.error(data.message)
+          toast.error(data.message)
         }
       }
     }
