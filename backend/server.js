@@ -20,12 +20,25 @@ const app = express()
 // cloudinary()
 
 // We have to connect our mongoDb 
-connectMongoDb(`${process.env.MONGODB_URI}/${DB_NAME}`)
-.then(()=>console.log("Mongodb is connected successfully"))
-.catch((error)=>console.log("Error in connecting with mongodb",error))
+const startServer = async () => {
+    try {
+        await connectMongoDb(`${process.env.MONGODB_URI}/${DB_NAME}`)
+        console.log("Mongodb is connected successfully")
+
+        app.listen(PORT, () => {
+            console.log(`Server is running successfully on port ${PORT}`)
+        })
+    } catch (error) {
+        console.log("Error in connecting with mongodb", error)
+        process.exit(1)
+    }
+}
+
+startServer()
 
 // Middleware configure 
 app.use(express.json())
+app.use('/public', express.static('public'))
 
 // CORS configuration
 // Allow configured env origins plus localhost defaults for development
@@ -59,10 +72,6 @@ app.use('/api/admin',adminRouter)
 app.use('/api/doctor',DoctorRouter)
 app.use('/api/user',userRouter)
 
-
-app.listen(PORT,()=>{
-    console.log(`Server is running successfully on port ${PORT}`)
-})
 
 
 

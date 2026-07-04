@@ -1,7 +1,10 @@
 const mongoose = require('mongoose')
 
 async function connectMongoDb(URL) {
-    await mongoose.connect(URL)
+    mongoose.set('bufferCommands', false)
+    await mongoose.connect(URL, {
+        serverSelectionTimeoutMS: 5000,
+    })
 }
 
 module.exports ={
