@@ -6,8 +6,6 @@ function Doctors() {
   const { speciality } = useParams()
   const { doctors } = useContext(AppContext)
 
-  console.log(doctors)
-
   const [filterDoc, setFilterDoc] = useState([])
   const navigate = useNavigate()
 
@@ -59,9 +57,9 @@ function Doctors() {
           <p 
             className="px-4 py-2 bg-violet-100 text-violet-700 rounded-lg font-medium cursor-pointer hover:bg-violet-200 hover:text-violet-900 transition shadow-sm"
 
-            onClick={() => speciality==='Pediatricians' ? navigate('/doctors') : navigate('/doctors/Pediatricians')}
+            onClick={() => speciality==='Pediatrician' ? navigate('/doctors') : navigate('/doctors/Pediatrician')}
           >
-            Pediatricians
+            Pediatrician
           </p>
 
           <p 
@@ -74,9 +72,9 @@ function Doctors() {
 
           <p 
             className="px-4 py-2 bg-violet-100 text-violet-700 rounded-lg font-medium cursor-pointer hover:bg-violet-200 hover:text-violet-900 transition shadow-sm"
-            onClick={() => speciality==='Gastroenterologist' ? navigate('/doctors') : navigate('/doctors/Gastroenterologist')}
+            onClick={() => speciality==='Cardiologist' ? navigate('/doctors') : navigate('/doctors/Cardiologist')}
           >
-            Gastroenterologist
+            Cardiologist
           </p>
         </div>
 
